@@ -40,13 +40,14 @@ public class App
 
         List<Humano> vikingos = new ArrayList<>(Arrays.asList(
                 new Vikingo("Egil", 23, new OrinarVikingoImp(),new BeberVikingoImp(),5),
-                new Vikingo("Daven", 23, new OrinarVikingoImp(),new BeberVikingoImp(),3),
-                new Vikingo("Aren", 23, new OrinarVikingoImp(),new BeberVikingoImp(),2)
+                new Vikingo("Daven", 33, new OrinarVikingoImp(),new BeberVikingoImp(),3),
+                new Vikingo("Aren", 26, new OrinarVikingoImp(),new BeberVikingoImp(),2)
         ));
 
         List<Humano> espartanos = new ArrayList<>(Arrays.asList(
-                new Espartano("Chris" , 24 , new OrinarEspartanoImp(), new BeberEspartanoImp(), 5),
-                new Espartano("Kratos" , 24 , new OrinarEspartanoImp(), new BeberEspartanoImp(), 7)
+                new Espartano("Chris" , 19 , new OrinarEspartanoImp(), new BeberEspartanoImp(), 5),
+                new Espartano("Kratos" , 40 , new OrinarEspartanoImp(), new BeberEspartanoImp(), 7),
+                new Espartano("ADONIS" , 32 , new OrinarEspartanoImp(), new BeberEspartanoImp(), 4)
         ));
 
         //DNI PAR. POR LO QUE SE ORDENA LA LISTA POR EDAD
