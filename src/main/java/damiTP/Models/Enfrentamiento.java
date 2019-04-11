@@ -1,7 +1,9 @@
 package damiTP.Models;
 
 import damiTP.App;
+import damiTP.Database.ResultadoDB;
 
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Random;
 
@@ -95,6 +97,30 @@ public class Enfrentamiento {
            }
        }while(Objects.isNull(ganador));
        this.ganador = ganador;
+       registrarGanador();
+    }
+
+    private void guardar(Resultado resultado){
+        try {
+            ResultadoDB.getInstance().insertar(resultado);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+    private void registrarGanador(){
+        if(Objects.nonNull(ganador)) {
+
+            if (ganador instanceof Vikingo) {
+                Resultado resultado = new Resultado(ganador.getNombre(), puntosVikingo);
+                guardar(resultado);
+            } else if (ganador instanceof Espartano) {
+                Resultado resultado = new Resultado(ganador.getNombre(), puntosEspartano);
+                guardar(resultado);
+            }
+
+
+        }
+
     }
 
     public Humano getGanador() {

@@ -1,15 +1,12 @@
 package damiTP;
 
-import damiTP.Config.ConnectionMySQL;
+import damiTP.Database.ResultadoDB;
 import damiTP.Models.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * Hello world!
@@ -24,6 +21,7 @@ public class App
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_RESET = "\u001B[0m";
 
 
@@ -37,7 +35,7 @@ public class App
     }
 
     public static void main( String[] args ){
-
+        //INICIALIZO LOS EQUIPOS
         List<Humano> vikingos = new ArrayList<>(Arrays.asList(
                 new Vikingo("Egil", 23, new OrinarVikingoImp(),new BeberVikingoImp(),5),
                 new Vikingo("Daven", 33, new OrinarVikingoImp(),new BeberVikingoImp(),3),
@@ -47,18 +45,25 @@ public class App
         List<Humano> espartanos = new ArrayList<>(Arrays.asList(
                 new Espartano("Chris" , 19 , new OrinarEspartanoImp(), new BeberEspartanoImp(), 5),
                 new Espartano("Kratos" , 40 , new OrinarEspartanoImp(), new BeberEspartanoImp(), 7),
-                new Espartano("ADONIS" , 32 , new OrinarEspartanoImp(), new BeberEspartanoImp(), 4)
+                new Espartano("Adonis" , 32 , new OrinarEspartanoImp(), new BeberEspartanoImp(), 4)
         ));
 
         //DNI PAR. POR LO QUE SE ORDENA LA LISTA POR EDAD
-
         vikingos.sort(Comparator.comparingInt(Humano::getEdad));
         espartanos.sort(Comparator.comparingInt(Humano::getEdad));
 
-        
-
+        //INICIA EL TORNEO
         Torneo torneo = new Torneo(vikingos,espartanos);
         torneo.comenzar();
 
+        // SE OBTIENE LOS GANADORES DE CADA RONDA
+        List<Resultado> resultados = ResultadoDB.getInstance().traerTodo();
+
+        // SE MUESTAN LOS GANADORES
+        System.out.println(ANSI_PURPLE + "\n\nGANADORES DE CADA RONDA: ");
+        resultados.forEach( r -> {
+            System.out.println("NOMBRE: " + r.getNombre_ganador() + " | PUNTOS DE CERVEZA: " + r.getPuntos_cerveza());
+        });
+        System.out.println(ANSI_RESET);
     }
 }

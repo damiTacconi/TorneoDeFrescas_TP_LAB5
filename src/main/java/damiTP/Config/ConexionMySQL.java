@@ -2,9 +2,9 @@ package damiTP.Config;
 
 import java.sql.*;
 
-public class ConnectionMySQL {
+public class ConexionMySQL {
 
-    private final String DRIVER = "com.mysql.jdbc.Driver";
+    private final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private final String USER = "root";
     private final String PASSWORD = "";
     static private final String DB_URL = "jdbc:mysql://localhost:3306/torneoDeFrescas";
@@ -12,16 +12,14 @@ public class ConnectionMySQL {
 
 
     private Connection connection;
-    private Statement statement;
-    private ResultSet resultSet;
 
-    private static final ConnectionMySQL INSTANCE = new ConnectionMySQL();
+    private static final ConexionMySQL INSTANCE = new ConexionMySQL();
 
-    public static ConnectionMySQL getInstance(){
+    public static ConexionMySQL getInstance(){
         return INSTANCE;
     }
 
-    private ConnectionMySQL(){
+    private ConexionMySQL(){
 
             try {
                 Class.forName(DRIVER);
@@ -37,5 +35,7 @@ public class ConnectionMySQL {
         }
     }
 
-
+    public Connection getConnection() {
+        return connection;
+    }
 }
