@@ -51,14 +51,11 @@ public class App
         ));
 
         //DNI PAR. POR LO QUE SE ORDENA LA LISTA POR EDAD
-        vikingos = vikingos.stream()
-                    .sorted(Comparator.comparingInt(Humano::getEdad))
-                    .collect(Collectors.toList());
 
-        espartanos = espartanos.stream()
-                .sorted(Comparator.comparingInt(Humano::getEdad))
-                .collect(Collectors.toList());
+        vikingos.sort(Comparator.comparingInt(Humano::getEdad));
+        espartanos.sort(Comparator.comparingInt(Humano::getEdad));
 
+        
 
         Torneo torneo = new Torneo(vikingos,espartanos);
         torneo.comenzar();
