@@ -3,6 +3,7 @@ package damiTP;
 import damiTP.Database.ResultadoDB;
 import damiTP.Models.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -55,7 +56,11 @@ public class App
 
         //INICIA EL TORNEO
         Torneo torneo = new Torneo(vikingos,espartanos);
-        torneo.comenzar();
+        try {
+            torneo.comenzar();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
 
         // SE OBTIENE LOS GANADORES DE CADA RONDA
         List<Resultado> resultados = ResultadoDB.getInstance().traerTodo();

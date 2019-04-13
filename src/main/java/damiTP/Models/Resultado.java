@@ -1,5 +1,9 @@
 package damiTP.Models;
 
+import damiTP.Database.ResultadoDB;
+
+import java.sql.SQLException;
+
 public class Resultado {
     private int id;
     protected String nombre_ganador;
@@ -32,5 +36,9 @@ public class Resultado {
 
     public void setPuntos_cerveza(int puntos_cerveza) {
         this.puntos_cerveza = puntos_cerveza;
+    }
+
+    public void registrarResultado() throws  SQLException{
+        ResultadoDB.getInstance().insertar(this);
     }
 }
