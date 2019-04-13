@@ -29,22 +29,25 @@ public class Enfrentamiento {
     private boolean verificarGanasDeOrinar(Humano h) {
         boolean orinando = false;
 
+        String espartanoOVikingo = h instanceof Vikingo? "VIKINGO" : "ESPARTANO";
+
         Random r = new Random();
         int g = r.nextInt(5);
 
-        if (g == 3 || g == 1) {
-            App.comunicar(App.ANSI_RED + "A " + h.getNombre() + " LE DIERON GANAS DE ORINAR Y ESTA INTENTANDO AGUANTAR !!"
+        if (g == 3) {
+            App.comunicar(App.ANSI_RED + "AL "+ espartanoOVikingo
+                    + " " + h.getNombre()
+                    + " LE DIERON GANAS DE ORINAR Y ESTA INTENTANDO AGUANTAR !!"
                     + App.ANSI_RESET, App.DEFAULT_DELAY);
 
             int puntos_orina = h.getOrinar().orinar();
-            if (h instanceof Espartano) {
-                puntos_orina += ((Espartano) h).getToleranciaExtra();
-            }
 
-            if (puntos_orina < 3)
+            App.comunicar("!!PUNTOS ORINA : " +  puntos_orina , App.DEFAULT_DELAY);
+            if (puntos_orina < App.RANDOM_GANAS_DE_ORINAR)
                 orinando = true;
             else
-                App.comunicar(h.getNombre() + " AH AGUANTADO Y SEGUIRA DISPUESTO A BEBER !!!", App.DEFAULT_DELAY);
+                App.comunicar(App.ANSI_PURPLE +
+                        h.getNombre() + " AH AGUANTADO Y SEGUIRA DISPUESTO A BEBER !!!" + App.ANSI_RESET, App.DEFAULT_DELAY);
 
         }
 
@@ -55,7 +58,7 @@ public class Enfrentamiento {
         int puntos = h.getBeber().beber();
 
         if (h instanceof Vikingo) {
-            puntosVikingo += puntos + ((Vikingo) vikingo).getBebedorProfesional();
+            puntosVikingo += puntos;
         } else if (h instanceof Espartano) {
             puntosEspartano += puntos;
         }
@@ -82,7 +85,7 @@ public class Enfrentamiento {
                         App.DEFAULT_DELAY);
             } else {
                 ganador = espartano;
-                App.comunicar(App.ANSI_GREEN + "EL GANADOR ES " + ganador.getNombre() + " !!, LOGRO " + puntosEspartano
+                App.comunicar(App.ANSI_GREEN + "EL GANADOR ES EL ESPARTANO " + ganador.getNombre() + " !!, LOGRO " + puntosEspartano
                                 + " PUNTOS !!" + App.ANSI_RESET,
                         App.DEFAULT_DELAY);
             }

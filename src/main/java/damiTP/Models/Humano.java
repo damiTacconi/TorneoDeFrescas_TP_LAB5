@@ -9,6 +9,7 @@ public class Humano {
     protected Orinar orinar;
     protected Beber beber;
 
+    public Humano(){}
     public Humano(String nombre, Integer edad, Orinar orinar, Beber beber) {
         this.nombre = nombre;
         this.edad = edad;
