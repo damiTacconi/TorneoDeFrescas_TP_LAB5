@@ -56,14 +56,8 @@ public class App
 
         //INICIA EL TORNEO
         try{
-
-        Torneo torneo = new Torneo(vikingos,espartanos);
-        try {
+            Torneo torneo = new Torneo(vikingos,espartanos);
             torneo.comenzar();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
         }catch (SQLException e){
             System.out.println("SQLException: " + e.getMessage());
         }catch (ExceptionInInitializerError ex){

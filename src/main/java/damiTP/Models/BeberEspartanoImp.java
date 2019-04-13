@@ -14,6 +14,6 @@ public class BeberEspartanoImp implements Beber {
         Random r = new Random();
 
         /* RANDOM MINIMO 1 HASTA 10*/
-        return r.nextInt(10 - 1 + 1) + 1; // ( MAX - MIN + 1 ) + 1
+        return r.nextInt(15 - 1 + 1) + 1; // ( MAX - MIN + 1 ) + 1
     }
 }
