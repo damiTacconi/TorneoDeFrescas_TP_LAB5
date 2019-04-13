@@ -24,7 +24,7 @@ public class ConexionMySQL {
             try {
                 Class.forName(DRIVER);
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
 
         try {
