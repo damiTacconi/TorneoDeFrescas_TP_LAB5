@@ -2,6 +2,7 @@ package damiTP.Models;
 
 import damiTP.App;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,7 +19,7 @@ public class Torneo {
         this.enfrentamientos = new ArrayList<>();
     }
 
-    public void comenzar(){
+    public void comenzar() throws SQLException, ExceptionInInitializerError, NoClassDefFoundError {
         int ronda = 1;
         while(vikingos.size() > 0 && espartanos.size() > 0)
         {

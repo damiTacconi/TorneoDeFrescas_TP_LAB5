@@ -53,7 +53,7 @@ public class Enfrentamiento {
     }
 
 
-    public void comenzar(){
+    public void comenzar() throws SQLException,ExceptionInInitializerError,NoClassDefFoundError{
         Humano ganador = null;
 
         App.comunicar("VIKINGO " + vikingo.getNombre() + " VS " + " ESPARTANO " + espartano.getNombre(),App.DEFAULT_DELAY);
@@ -100,14 +100,11 @@ public class Enfrentamiento {
        registrarGanador();
     }
 
-    private void guardar(Resultado resultado){
-        try {
-            ResultadoDB.getInstance().insertar(resultado);
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }
+    private void guardar(Resultado resultado) throws SQLException,ExceptionInInitializerError,NoClassDefFoundError {
+        ResultadoDB.getInstance().insertar(resultado);
     }
-    private void registrarGanador(){
+
+    private void registrarGanador() throws SQLException,ExceptionInInitializerError,NoClassDefFoundError{
         if(Objects.nonNull(ganador)) {
 
             if (ganador instanceof Vikingo) {

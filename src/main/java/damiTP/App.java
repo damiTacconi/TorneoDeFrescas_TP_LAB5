@@ -3,6 +3,7 @@ package damiTP;
 import damiTP.Database.ResultadoDB;
 import damiTP.Models.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -54,17 +55,31 @@ public class App
         espartanos.sort(Comparator.comparingInt(Humano::getEdad));
 
         //INICIA EL TORNEO
+        try{
+
         Torneo torneo = new Torneo(vikingos,espartanos);
         torneo.comenzar();
 
-        // SE OBTIENE LOS GANADORES DE CADA RONDA
-        List<Resultado> resultados = ResultadoDB.getInstance().traerTodo();
+        }catch (SQLException e){
+            System.out.println("SQLException: " + e.getMessage());
+        }catch (ExceptionInInitializerError ex){
+            System.out.println("ExceptionInInitializerError: " + ex.getMessage());
+        }catch (NoClassDefFoundError e){
+            System.out.println("NoClassDefFoundError: " + e.getMessage());
+        }
 
-        // SE MUESTAN LOS GANADORES
-        System.out.println(ANSI_PURPLE + "\n\nGANADORES DE CADA RONDA: ");
-        resultados.forEach( r -> {
-            System.out.println("NOMBRE: " + r.getNombre_ganador() + " | PUNTOS DE CERVEZA: " + r.getPuntos_cerveza());
-        });
-        System.out.println(ANSI_RESET);
+        // SE OBTIENE LOS GANADORES DE CADA RONDA
+        try {
+            List<Resultado> resultados = ResultadoDB.getInstance().traerTodo();
+
+            // SE MUESTAN LOS GANADORES
+            System.out.println(ANSI_PURPLE + "\n\nGANADORES DE CADA RONDA: ");
+            resultados.forEach(r -> {
+                System.out.println("NOMBRE: " + r.getNombre_ganador() + " | PUNTOS DE CERVEZA: " + r.getPuntos_cerveza());
+            });
+            System.out.println(ANSI_RESET);
+        }catch (NoClassDefFoundError e){
+            System.out.println("NoClassDefFoundError: " + e.getMessage());
+        }
     }
 }
