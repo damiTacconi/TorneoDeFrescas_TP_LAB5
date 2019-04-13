@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class BeberVikingoImp extends Vikingo implements Beber {
 
-    public BeberVikingoImp(int bebedor){ bebedorProfesional = bebedor;}
+    public BeberVikingoImp(int bebedor){super(); bebedorProfesional = bebedor;}
 
     @Override
     public Integer beber() {
