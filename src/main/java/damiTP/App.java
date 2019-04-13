@@ -48,6 +48,7 @@ public class App
                 new Espartano("Adonis" , 32 , new OrinarEspartanoImp(), new BeberEspartanoImp(), 4)
         ));
 
+
         //DNI PAR. POR LO QUE SE ORDENA LA LISTA POR EDAD
         vikingos.sort(Comparator.comparingInt(Humano::getEdad));
         espartanos.sort(Comparator.comparingInt(Humano::getEdad));
