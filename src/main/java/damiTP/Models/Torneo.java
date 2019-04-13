@@ -12,11 +12,13 @@ public class Torneo {
     private List<Enfrentamiento> enfrentamientos;
     private List<Humano> vikingos;
     private List<Humano> espartanos;
+    private String nombre_equipo_ganador;
 
     public Torneo(List<Humano> vikingos, List<Humano> espartanos) {
         this.vikingos = vikingos;
         this.espartanos = espartanos;
         this.enfrentamientos = new ArrayList<>();
+        nombre_equipo_ganador = "";
     }
 
     public void comenzar() throws SQLException {
@@ -40,13 +42,19 @@ public class Torneo {
                 .filter(en -> en.getGanador() instanceof Espartano)
                 .count();
 
-        System.out.println("LOS VIKiNGOS GANARON " + victorias_vikingos + " VECES ! " +
-                "\n LOS ESPARTANOS GANARON " + victorias_espartanos + " VECES ! ");
+        App.comunicar("LOS VIKiNGOS GANARON " + victorias_vikingos + " VECES ! " +
+                "\n LOS ESPARTANOS GANARON " + victorias_espartanos + " VECES ! " , App.DEFAULT_DELAY);
+
+        nombre_equipo_ganador = victorias_espartanos >= victorias_vikingos ? "ESPARTANOS" : "VIKINGOS";
     }
 
     private Humano getHumano(List<Humano> list)
     {
         Random rand = new Random();
         return list.remove(rand.nextInt(list.size()));
+    }
+
+    public String getNombre_equipo_ganador() {
+        return nombre_equipo_ganador;
     }
 }

@@ -10,7 +10,15 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Hello world!
+ * Hello world! - TP LAB 5 - TSSI - Damian Tacconi.
+ *
+ * EL JUEGO CONSISTE EN UN TORNEO DE VIKINGOS VS ESPARTANOS, EL DESAFIO RADICA EN TOMAR LA MAYOR
+ * CANTIDAD DE CERVEZA POSIBLE SIN TENER QUE IR AL BAÑO A ORINAR. AMBOS BANDOS SE
+ * ENFRENTARAN 1 a 1, EL HUMANO QUE TOME LA MAYOR CANTIDAD (50) DE CERVEZA (PUNTOS) GANA LA RONDA 1 vs 1.
+ * SI EL HUMANO ORINA, PIERDE. SI AMBOS PASAN LOS 50 PUNTOS, GANA EL QUE MAS PUNTOS HIZO, EN CASO DE EMPATE
+ * GANA EL VIKINGO.
+ *
+ * AL FINALIZAR TODAS LAS RONDAS, EL EQUIPO CON MAS VICTORIAS GANA, EN CASO DE EMPATE, GANAN LOS ESPARTANOS.
  *
  */
 public class App 
@@ -58,16 +66,9 @@ public class App
         try{
             Torneo torneo = new Torneo(vikingos,espartanos);
             torneo.comenzar();
-        }catch (SQLException e){
-            System.out.println("SQLException: " + e.getMessage());
-        }catch (ExceptionInInitializerError ex){
-            System.out.println("ExceptionInInitializerError: " + ex.getMessage());
-        }catch (NoClassDefFoundError e){
-            System.out.println("NoClassDefFoundError: " + e.getMessage());
-        }
 
-        // SE OBTIENE LOS GANADORES DE CADA RONDA
-        try {
+            // SE OBTIENE LOS GANADORES DE CADA RONDA
+
             List<Resultado> resultados = ResultadoDB.getInstance().traerTodo();
 
             // SE MUESTAN LOS GANADORES
@@ -75,7 +76,13 @@ public class App
             resultados.forEach(r -> {
                 System.out.println("NOMBRE: " + r.getNombre_ganador() + " | PUNTOS DE CERVEZA: " + r.getPuntos_cerveza());
             });
-            System.out.println(ANSI_RESET);
+
+            System.out.println(ANSI_GREEN + "GANARON LOS " + torneo.getNombre_equipo_ganador()+ " !!" +ANSI_RESET);
+
+        }catch (SQLException e){
+            System.out.println("SQLException: " + e.getMessage());
+        }catch (ExceptionInInitializerError ex){
+            System.out.println("ExceptionInInitializerError: " + ex.getMessage());
         }catch (NoClassDefFoundError e){
             System.out.println("NoClassDefFoundError: " + e.getMessage());
         }

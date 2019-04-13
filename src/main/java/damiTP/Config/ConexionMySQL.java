@@ -28,7 +28,7 @@ public class ConexionMySQL {
             }
 
         try {
-            connection = DriverManager.getConnection(DB_URL+OPTIONS,USER, "" );
+            connection = DriverManager.getConnection(DB_URL+OPTIONS,USER, PASSWORD );
 
         } catch (SQLException e) {
             System.out.println("HUBO UN PROBLEMA EN LA BASE DE DATOS: " + e.getMessage());
