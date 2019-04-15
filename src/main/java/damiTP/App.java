@@ -24,7 +24,7 @@ import java.util.List;
 public class App 
 {
 
-    public static final int RANDOM_GANAS_DE_ORINAR = 5;
+    public static final int RANDOM_GANAS_DE_ORINAR = 20;
     public static final int DEFAULT_DELAY = 800;
 
     public static final String ANSI_GREEN = "\u001B[32m";
@@ -46,15 +46,15 @@ public class App
     public static void main( String[] args ){
         //INICIALIZO LOS EQUIPOS
         List<Humano> vikingos = new ArrayList<>(Arrays.asList(
-                new Vikingo("Egil", 23,6),
-                new Vikingo("Daven", 33,4),
-                new Vikingo("Aren", 26,2)
+                new Vikingo("Egil", 23,new OrinarVikingoImp(), new BeberVikingoImp(),6),
+                new Vikingo("Daven", 33,new OrinarVikingoImp(), new BeberVikingoImp(),4),
+                new Vikingo("Aren", 26,new OrinarVikingoImp(), new BeberVikingoImp(),2)
         ));
 
         List<Humano> espartanos = new ArrayList<>(Arrays.asList(
-                new Espartano("Chris" , 19 , 5),
-                new Espartano("Kratos" , 40 , 7),
-                new Espartano("Adonis" , 32, 4)
+                new Espartano("Chris" , 19 ,new OrinarEspartanoImp(), new BeberEspartanoImp(), 5),
+                new Espartano("Kratos" , 40 ,new OrinarEspartanoImp(), new BeberEspartanoImp(), 7),
+                new Espartano("Adonis" , 32,new OrinarEspartanoImp(), new BeberEspartanoImp(), 4)
         ));
 
 

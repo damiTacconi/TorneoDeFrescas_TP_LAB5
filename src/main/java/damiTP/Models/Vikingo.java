@@ -6,10 +6,8 @@ import damiTP.Interfaces.Orinar;
 public class Vikingo extends Humano{
     protected Integer bebedorProfesional;
 
-    public Vikingo(){super();}
-
-    public Vikingo(String nombre, Integer edad, Integer bebedorProfesional) {
-        super(nombre, edad, new OrinarVikingoImp(), new BeberVikingoImp(bebedorProfesional));
+    public Vikingo(String nombre, Integer edad, Orinar orinar, Beber beber, Integer bebedorProfesional) {
+        super(nombre, edad,orinar, beber);
         setBebedorProfesional(bebedorProfesional);
     }
 

@@ -6,11 +6,11 @@ import damiTP.Interfaces.Orinar;
 public class Espartano extends Humano{
     protected Integer toleranciaExtra;
 
-    public Espartano(String nombre, Integer edad, Integer tE) {
-        super(nombre, edad, new OrinarEspartanoImp(tE), new BeberEspartanoImp());
+    public Espartano(String nombre, Integer edad, Orinar orinar, Beber beber, Integer tE) {
+        super(nombre, edad, orinar,beber);
         setToleranciaExtra(tE);
     }
-    public Espartano(){super();}
+
     public Integer getToleranciaExtra() {
         return toleranciaExtra;
     }

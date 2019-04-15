@@ -42,8 +42,12 @@ public class Enfrentamiento {
 
             int puntos_orina = h.getOrinar().orinar();
 
+            if(h instanceof Espartano) puntos_orina += ((Espartano) h).getToleranciaExtra();
+
+
+
             App.comunicar("!!PUNTOS ORINA : " +  puntos_orina , App.DEFAULT_DELAY);
-            if (puntos_orina < App.RANDOM_GANAS_DE_ORINAR)
+            if (puntos_orina < (App.RANDOM_GANAS_DE_ORINAR/2))
                 orinando = true;
             else
                 App.comunicar(App.ANSI_PURPLE +
@@ -58,7 +62,7 @@ public class Enfrentamiento {
         int puntos = h.getBeber().beber();
 
         if (h instanceof Vikingo) {
-            puntosVikingo += puntos;
+            puntosVikingo += puntos + ((Vikingo) h).getBebedorProfesional();
         } else if (h instanceof Espartano) {
             puntosEspartano += puntos;
         }
