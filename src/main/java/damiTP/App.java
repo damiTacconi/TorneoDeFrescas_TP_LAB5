@@ -28,8 +28,9 @@ public class App
 {
 
     public static final int RANDOM_GANAS_DE_ORINAR = 20;
-    public static final int DEFAULT_DELAY = 1;
+    public static final int DEFAULT_DELAY = 800; // DURACION DEL LOG
 
+    //COLORES
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_RED = "\u001B[31m";
