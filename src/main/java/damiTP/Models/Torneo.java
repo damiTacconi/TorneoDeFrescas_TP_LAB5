@@ -4,8 +4,10 @@ import damiTP.App;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Torneo {
 
@@ -21,7 +23,7 @@ public class Torneo {
         nombre_equipo_ganador = "";
     }
 
-    public void comenzar() throws SQLException {
+    public List<Humano> comenzar() throws SQLException {
         int ronda = 1;
         while(vikingos.size() > 0 && espartanos.size() > 0)
         {
@@ -46,6 +48,19 @@ public class Torneo {
                 "\n LOS ESPARTANOS GANARON " + victorias_espartanos + " VECES ! " , App.DEFAULT_DELAY);
 
         nombre_equipo_ganador = victorias_espartanos >= victorias_vikingos ? "ESPARTANOS" : "VIKINGOS";
+
+        if(victorias_espartanos >= victorias_vikingos){
+            nombre_equipo_ganador = "ESPARTANOS";
+            return enfrentamientos
+                    .stream()
+                    .filter( e -> e.getGanador() instanceof Espartano)
+                    .map(Enfrentamiento::getGanador)
+                    .collect(Collectors.toList());
+        }else return enfrentamientos
+                .stream()
+                .filter( e -> e.getGanador() instanceof Vikingo)
+                .map(Enfrentamiento::getGanador).collect(Collectors.toList());
+
     }
 
     private Humano getHumano(List<Humano> list)

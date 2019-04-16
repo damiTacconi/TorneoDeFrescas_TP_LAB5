@@ -9,7 +9,6 @@ public class BeberVikingoImp implements Beber {
 
     @Override
     public Integer beber() {
-        System.out.println("VIKINGO BEBIENDO....");
         Random r = new Random();
 
         /* RANDOM MINIMO 1 hASTA 15*/

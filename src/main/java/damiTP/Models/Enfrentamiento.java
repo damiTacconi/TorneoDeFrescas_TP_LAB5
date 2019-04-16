@@ -9,40 +9,47 @@ public class Enfrentamiento {
 
     private int max_cervezas;
 
-    private Humano vikingo;
-    private int puntosVikingo;
-    private Humano espartano;
-    private int puntosEspartano;
+    private Humano humano1;
+    private int puntosHumano1;
+    private Humano humano2;
+    private int puntosHumano2;
     private Humano ganador = null;
-
+    private boolean turno = true;
     public Enfrentamiento() {
     }
 
-    public Enfrentamiento(Vikingo v, Espartano e, int max_c) {
-        vikingo = v;
-        espartano = e;
-        puntosEspartano = 0;
-        puntosVikingo = 0;
+    public Enfrentamiento(Humano h1, Humano h2, int max_c) {
+        humano1 = h1;
+        humano2 = h2;
+        puntosHumano2 = 0;
+        puntosHumano1 = 0;
         max_cervezas = max_c;
     }
 
     private boolean verificarGanasDeOrinar(Humano h) {
         boolean orinando = false;
 
-        String espartanoOVikingo = h instanceof Vikingo? "VIKINGO" : "ESPARTANO";
-
+        /*
+        * RANDOM PARA SABER SI AL HUMANO LE DAN GANAS DE IR AL BAÑO
+         */
         Random r = new Random();
         int g = r.nextInt(5);
 
         if (g == 3) {
-            App.comunicar(App.ANSI_RED + "AL "+ espartanoOVikingo
+
+            // AL HUMANO LE DIERON GANAS DE ORINAR, AHORA SE DEBE EVALUAR SI SE ORINA O SI LOGRA AGUANTAR
+
+            App.comunicar(App.ANSI_RED + "AL "+ getNombreRaza(h)
                     + " " + h.getNombre()
                     + " LE DIERON GANAS DE ORINAR Y ESTA INTENTANDO AGUANTAR !!"
                     + App.ANSI_RESET, App.DEFAULT_DELAY);
 
             int puntos_orina = h.getOrinar().orinar();
 
-            if(h instanceof Espartano) puntos_orina += ((Espartano) h).getToleranciaExtra();
+            if(h instanceof Espartano)
+                puntos_orina += ((Espartano) h).getToleranciaExtra();
+            else if( h instanceof FinalBoss)
+                puntos_orina += ((FinalBoss) h).getToleranciaExtra();
 
 
 
@@ -58,70 +65,75 @@ public class Enfrentamiento {
         return orinando;
     }
 
-    private void beber(Humano h) {
+    private int beber(Humano h) {
         int puntos = h.getBeber().beber();
 
         if (h instanceof Vikingo) {
-            puntosVikingo += puntos + ((Vikingo) h).getBebedorProfesional();
-        } else if (h instanceof Espartano) {
-            puntosEspartano += puntos;
+            puntos +=  ((Vikingo) h).getBebedorProfesional();
+        } else if (h instanceof  FinalBoss) {
+            puntos += ((FinalBoss) h).getBebedorProfesional();
         }
+
+        return puntos;
     }
 
     private void turno(Humano h) {
-        if (h instanceof Vikingo) {
-            beber(vikingo);
-            App.comunicar(vikingo.getNombre() + " CONSIGUIO " + puntosVikingo + " PUNTOS BEBIENDO !!", App.DEFAULT_DELAY);
-        } else if (h instanceof Espartano) {
-            beber(espartano);
-            App.comunicar(espartano.getNombre() + " CONSIGIUIO " + puntosEspartano + " PUNTOS BEBIENDO !!", App.DEFAULT_DELAY);
-        }
+            int total;
+            if(turno) total = puntosHumano1 += beber(h);
+            else total = puntosHumano2 += beber(h);
+
+            App.comunicar(h.getNombre() + " CONSIGUIO " + total + " PUNTOS BEBIENDO !!",
+                    App.DEFAULT_DELAY);
+            turno = !turno;
     }
 
     private void verificarGanador() throws SQLException {
 
         if(Objects.isNull(ganador)) {
 
-            if (puntosVikingo >= max_cervezas && puntosVikingo >= puntosEspartano) {
-                ganador = vikingo;
-                App.comunicar(App.ANSI_GREEN + "EL GANADOR ES EL VIKINGO " + ganador.getNombre() + " !!, LOGRO " + puntosVikingo
+            if (puntosHumano1 >= max_cervezas && puntosHumano1 >= puntosHumano2) {
+                ganador = humano1;
+                App.comunicar(App.ANSI_GREEN + "EL GANADOR ES EL "+ getNombreRaza(humano1) + " " +ganador.getNombre() + " !!, LOGRO " + puntosHumano1
                                 + " PUNTOS !!" + App.ANSI_RESET,
                         App.DEFAULT_DELAY);
             } else {
-                ganador = espartano;
-                App.comunicar(App.ANSI_GREEN + "EL GANADOR ES EL ESPARTANO " + ganador.getNombre() + " !!, LOGRO " + puntosEspartano
+                ganador = humano2;
+                App.comunicar(App.ANSI_GREEN + "EL GANADOR ES EL " + getNombreRaza(humano2) + " " +ganador.getNombre() + " !!, LOGRO " + puntosHumano2
                                 + " PUNTOS !!" + App.ANSI_RESET,
                         App.DEFAULT_DELAY);
             }
         }
 
-        registrarGanador();
+        if(!(ganador instanceof FinalBoss))
+            registrarGanador();
     }
 
     void comenzar() throws SQLException{
-        App.comunicar("VIKINGO " + vikingo.getNombre() + " VS " + " ESPARTANO " + espartano.getNombre(), App.DEFAULT_DELAY);
+        App.comunicar(getNombreRaza(humano1)+ " " + humano1.getNombre() + " VS " + getNombreRaza(humano2) + " " + humano2.getNombre(), App.DEFAULT_DELAY);
         do {
 
-            turno(vikingo);
-            boolean orinando = verificarGanasDeOrinar(vikingo);
+            turno(humano1);
+            boolean orinando = verificarGanasDeOrinar(humano1);
 
             if (orinando) {
-                App.comunicar(App.ANSI_GREEN + "EL VIKINGO " + vikingo.getNombre() + " SE ORINO !!! EL GANADOR ES EL ESPARTANO "
-                        + espartano.getNombre() + " !!!" + App.ANSI_RESET, App.DEFAULT_DELAY);
-                ganador = espartano;
+                App.comunicar(App.ANSI_GREEN + "EL "+ getNombreRaza(humano1) + " " + humano1.getNombre() +
+                        " SE ORINO !!! EL GANADOR ES EL " + getNombreRaza(humano2) + " "
+                        + humano2.getNombre() + " !!!" + App.ANSI_RESET, App.DEFAULT_DELAY);
+                ganador = humano2;
 
             } else {
 
-                turno(espartano);
-                orinando = verificarGanasDeOrinar(espartano);
+                turno(humano2);
+                orinando = verificarGanasDeOrinar(humano2);
 
                 if (orinando) {
-                    App.comunicar(App.ANSI_GREEN + "EL ESPARTANO " + espartano.getNombre() + " SE ORINO !!! EL GANADOR ES EL VIKINGO "
-                            + vikingo.getNombre() + " !!!" + App.ANSI_RESET, App.DEFAULT_DELAY);
-                    ganador = vikingo;
+                    App.comunicar(App.ANSI_GREEN + "EL " + getNombreRaza(humano2) + " " + humano2.getNombre() +
+                            " SE ORINO !!! EL GANADOR ES EL " + getNombreRaza(humano1) + " "
+                            + humano1.getNombre() + " !!!" + App.ANSI_RESET, App.DEFAULT_DELAY);
+                    ganador = humano1;
                 }
             }
-        } while (Objects.isNull(ganador) && puntosVikingo < max_cervezas && puntosEspartano < max_cervezas) ;
+        } while (Objects.isNull(ganador) && puntosHumano1 < max_cervezas && puntosHumano2 < max_cervezas) ;
 
         verificarGanador();
     }
@@ -131,10 +143,10 @@ public class Enfrentamiento {
     private void registrarGanador() throws SQLException {
         if (Objects.nonNull(ganador)) {
             if (ganador instanceof Vikingo) {
-                Resultado resultado = new Resultado(ganador.getNombre(), puntosVikingo);
+                Resultado resultado = new Resultado(ganador.getNombre(), puntosHumano1);
                 resultado.registrarResultado();
             } else if (ganador instanceof Espartano) {
-                Resultado resultado = new Resultado(ganador.getNombre(), puntosEspartano);
+                Resultado resultado = new Resultado(ganador.getNombre(), puntosHumano2);
                 resultado.registrarResultado();
             }
         }
@@ -144,31 +156,10 @@ public class Enfrentamiento {
         return ganador;
     }
 
-    public void setGanador(Humano ganador) {
-        this.ganador = ganador;
-    }
-
-    public int getMax_cervezas() {
-        return max_cervezas;
-    }
-
-    public void setMax_cervezas(int max_cervezas) {
-        this.max_cervezas = max_cervezas;
-    }
-
-    public Humano getVikingo() {
-        return vikingo;
-    }
-
-    public void setVikingo(Humano vikingo) {
-        this.vikingo = vikingo;
-    }
-
-    public Humano getEspartano() {
-        return espartano;
-    }
-
-    public void setEspartano(Humano espartano) {
-        this.espartano = espartano;
+    private String getNombreRaza(Humano h) {
+        if(h instanceof Vikingo) return "VIKINGO";
+        else if(h instanceof Espartano) return "ESPARTANO";
+        else if(h instanceof FinalBoss) return "DUEÑO DE LA TABERNA";
+        else return "INDEFINIDO";
     }
 }
