@@ -12,6 +12,8 @@ public class OrinarEspartanoImp  implements Orinar {
     public Integer orinar() {
         Random r = new Random();
 
-        return r.nextInt(App.RANDOM_GANAS_DE_ORINAR + 2);
+        //LOS QUE AGUANTEN COMO ESPARTANO TENDRAN EL SIGUIENTE AGUANTE:
+        // RANGOM DEFINIDO EN MAIN + 4 ADICIONALES + TOLERANCIA-EXTRA
+        return r.nextInt(App.RANDOM_GANAS_DE_ORINAR + 4);
     }
 }

@@ -7,7 +7,7 @@ public class ConexionMySQL {
     private final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private final String USER = "root";
     private final String PASSWORD = "";
-    static private final String DB_URL = "jdbc:mysql://localhost:3306/torneoDeFrescas";
+    static private final String DB_URL = "jdbc:mysql://localhost:3306/torneodefrescas";
     static private final String OPTIONS = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
 

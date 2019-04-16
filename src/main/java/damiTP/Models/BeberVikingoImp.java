@@ -11,7 +11,8 @@ public class BeberVikingoImp implements Beber {
     public Integer beber() {
         Random r = new Random();
 
-        /* RANDOM MINIMO 1 hASTA 15*/
-        return r.nextInt(10 - 1 + 1) + 1; // ( MAX - MIN + 1 ) + 1
+        /* RANDOM MINIMO 1 hASTA 8*/
+        // LOS QUE BEBAN COMO VIKINGOS TENDRAN UN RANDOM DE HASTA 8 PUNTOS + EL ATRIBUTO EXTRA
+        return r.nextInt(8 - 1 + 1) + 1; // ( MAX - MIN + 1 ) + 1
     }
 }
